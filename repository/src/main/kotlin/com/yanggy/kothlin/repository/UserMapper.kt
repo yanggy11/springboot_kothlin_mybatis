@@ -20,4 +20,5 @@ interface UserMapper {
     fun getUsersById(@Param("id")id : Long?) : Users?
 
     fun getUsersList(user : UserParam) : List<Users>?
+    fun getUsersCount(user : UserParam) : Int?
 }

@@ -10,5 +10,5 @@ import java.io.Serializable
 class UserParam : Serializable {
     var id : String = ""
     var name : String = ""
-    var page : Page<Users>? = Page<Users>()
+    var page : Page<Any> = Page<Any>()
 }

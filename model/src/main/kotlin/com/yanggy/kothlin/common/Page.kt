@@ -8,6 +8,9 @@ import java.io.Serializable
 
 class Page<T>(var pageNo : Int = 1, var pageSize : Int = 20) : Serializable {
     var data : T? = null
+    var offset : Int = 0
+    var totalRecord : Int? = 0
+    var totalPage : Int? = 0
 
     constructor(data : T?) : this(1, 20) {
         this.data = data

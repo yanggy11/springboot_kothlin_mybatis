@@ -41,8 +41,12 @@
 
 	<select id="getUsersList" parameterType="com.yanggy.kothlin.param.UserParam" resultMap="userMap">
 		select id, name, age ,delete_flag, create_date, update_date from k_users
-		<if test="offset > 0 and pageSize > 0">
+		<if test="page.offset > 0 and page.pageSize > 0">
 			limit #{offset}, #{pageSize}
 		</if>
+	</select>
+
+	<select id="getUsersCount" parameterType="Int" resultMap="userMap">
+		select count(1) from k_users
 	</select>
 </mapper>

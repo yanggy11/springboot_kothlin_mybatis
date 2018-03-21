@@ -5,6 +5,7 @@ import com.yanggy.kothlin.service.UsersService
 import com.yanggy.kothlin.common.ResponseEntity
 import com.yanggy.kothlin.common.ResponseEntityBuilder
 import com.yanggy.kothlin.common.Constants
+import com.yanggy.kothlin.common.Page
 import com.yanggy.kothlin.param.UserParam
 import com.yanggy.kothlin.repository.UserMapper
 
@@ -44,6 +45,22 @@ open class UserServiceImpl : UsersService {
     }
 
     override fun getUsersList(user : UserParam) : ResponseEntity<Any>? {
-        return ResponseEntityBuilder.buildNormalResponse(userMapper.getUsersList(user))
+        user.page.offset = (user.page.pageNo - 1) * user.page.pageSize
+
+        return ResponseEntityBuilder.buildNormalResponse(this.buildPage(userMapper.getUsersList(user), userMapper.getUsersCount(user), user.page))
+    }
+
+    private fun buildPage(data : Any?, count : Int?, page : Page<Any>) : Page<Any> {
+        if(null != count) {
+            page.data = data
+            page.totalRecord = count
+            var totalPage = count as Int / (page.pageSize)
+            page.totalPage = when(count % page.pageSize) {
+                0 -> totalPage
+                else -> totalPage + 1
+            }
+        }
+
+        return page
     }
 }
