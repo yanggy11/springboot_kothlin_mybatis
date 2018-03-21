@@ -1,0 +1,37 @@
+server:
+  port: 1987
+
+spring:
+  application:
+    name: springboot
+  datasource:
+    url: jdbc:mysql://rm-bp17330s3si44dsz7bo.mysql.rds.aliyuncs.com:3306/yanggy
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: Ygy250725
+    initialSize: 100
+    minIdle: 1
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    type: com.alibaba.druid.pool.DruidDataSource
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  redis:
+    database: 0
+    host: 192.168.33.82
+    port: 30000
+    password: admin
+    timeout: 0
+    pool:
+      max-active: 8
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+
+mybatis:
+  mapper-locations: classpath:sql-mapper/*.xml
+  configLocation: classpath:mybatis-config.xml

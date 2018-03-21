@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yanggy.kothlin.repository.UserMapper">
+
+	<resultMap id="userMap" type="com.yanggy.kothlin.model.Users">
+		<id column="id" property="id" jdbcType="BIGINT"/>
+		<result column="name" property="name" jdbcType="VARCHAR"/>
+		<result column="name" property="name" jdbcType="VARCHAR"/>
+		<result column="age" property="age" jdbcType="INTEGER"/>
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+		<result column="delete_flag" property="deleteFlag" jdbcType="VARCHAR"/>
+	</resultMap>
+
+	<insert id="addUser" parameterType="com.yanggy.kothlin.model.Users">
+		insert into k_users(name, age) values(#{name}, #{age})
+	</insert>
+
+	<update id="updateUser" parameterType="com.yanggy.kothlin.model.Users">
+		update k_users
+		<set>
+			<if test="name != null and name != ''">
+				name = #{name},
+			</if>
+
+			<if test="age > 0">
+				age = #{age}
+			</if>
+		</set>
+
+		where id = #{id}
+	</update>
+
+	<update id="deleteUser" parameterType="Long">
+		update k_users set delete_flag = 1 where id = #{id}
+	</update>
+
+	<select id="getUsersById" parameterType="Long" resultMap="userMap">
+		select id, name, age ,delete_flag, create_date, update_date from k_users where id = #{id}
+	</select>
+
+	<select id="getUsersList" parameterType="com.yanggy.kothlin.param.UserParam" resultMap="userMap">
+		select id, name, age ,delete_flag, create_date, update_date from k_users
+		<if test="offset > 0 and pageSize > 0">
+			limit #{offset}, #{pageSize}
+		</if>
+	</select>
+</mapper>
